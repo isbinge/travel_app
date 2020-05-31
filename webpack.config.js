@@ -15,9 +15,27 @@ module.exports = {
     mode:'development',
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".tsx"]
+        extensions: [".ts", ".tsx",".js",".jsx",".ejs"]
+    },
+    optimization:{
+        splitChunks:{
+            cacheGroups:{
+                vendor:{
+                    test:/[\\/]node_module[\\/]/,
+                    name:'vendors',
+                    chunks: 'all'
+                }
+            }
+        },
+        runtimeChunk: 'single',
+        moduleIds: 'deterministic'
     },
     devtool:'inline-source-map',
+    devServer:{
+        contentBase: path.resolve(__dirname,'dist'),
+        port: 9000,
+        hot: true
+    },
     module:{
         rules:[
             {
@@ -39,7 +57,12 @@ module.exports = {
                 loader:'source-map-loader'
             }
         ]
+        
     },
+    // externals: {
+    //     react: "React",
+    //     "react-dom": "ReactDOM"
+    //   },
     plugins:[
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
