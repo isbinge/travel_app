@@ -7,8 +7,11 @@
         "target": "es6",
         "jsx": "react",
         "allowSyntheticDefaultImports": true,
-        "allowJs": true
+        "suppressImplicitAnyIndexErrors": true,
+        "allowJs": true,
+        "moduleResolution": "node",
+        "declaration": false, // don't emit declarations
     },
     "include": ["src/**/*"],
-"exclude": ["node_modules", "**/*.spec.ts"]
+    "exclude": ["node_modules", "**/*.spec.ts"]
 }
