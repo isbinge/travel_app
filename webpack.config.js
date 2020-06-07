@@ -1,74 +1,72 @@
-
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-
-    entry:{
-        main: path.resolve(__dirname,'src/index.tsx')
+    entry: {
+        main: path.resolve(__dirname, 'src/index.tsx'),
     },
-    output:{
-        filename:'[name].[contenthash].js',
-        path:path.resolve(__dirname,'dist')
+    output: {
+        filename: '[name].[contenthash].js',
+        path: path.resolve(__dirname, 'dist'),
     },
-    mode:'development',
+    mode: 'development',
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".tsx",".js",".jsx",".ejs"]
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.ejs'],
     },
-    optimization:{
-        splitChunks:{
-            cacheGroups:{
-                vendor:{
-                    test:/[\\/]node_module[\\/]/,
-                    name:'vendors',
-                    chunks: 'all'
-                }
-            }
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_module[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
         },
         runtimeChunk: 'single',
-        moduleIds: 'deterministic'
+        moduleIds: 'deterministic',
     },
-    devtool:'inline-source-map',
-    devServer:{
-        contentBase: path.resolve(__dirname,'dist'),
+    devtool: 'inline-source-map',
+    devServer: {
+        historyApiFallback: true,
+        contentBase: path.resolve(__dirname, 'dist'),
         port: 9000,
-        hot: true
+        hot: true,
     },
-    module:{
-        rules:[
+    module: {
+        rules: [
             {
-                test:/\.css$/,
-                use:["style-loader","css-loader"]
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
             },
             {
-                test:/\.ts(x?)$/,
-                exclude:/node_modules/,
-                use:[
+                test: /\.ts(x?)$/,
+                exclude: /node_modules/,
+                use: [
                     {
-                        loader:'ts-loader'
-                    }
-                ]
+                        loader: 'ts-loader',
+                    },
+                ],
             },
             {
-                enforce:'pre',
-                test:/\.js$/,
-                loader:'source-map-loader'
-            }
-        ]
-        
+                enforce: 'pre',
+                test: /\.js$/,
+                loader: 'source-map-loader',
+            },
+        ],
     },
     // externals: {
     //     react: "React",
     //     "react-dom": "ReactDOM"
     //   },
-    plugins:[
+    plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            title:'React',
-            filename:'./index.html',
-            template: 'src/template.ejs'
-        })
-    ]
-}
+            title: 'React',
+            filename: './index.html',
+            template: 'src/template.ejs',
+        }),
+    ],
+};
